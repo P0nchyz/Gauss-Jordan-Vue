@@ -45,7 +45,7 @@ watch(matrix, () => emit("matrixUpdated", matrix));
 </script>
 
 <template>
-	<div class="self-start p-12" id="container" style="margin-left: 20%;">
+	<div class="p-12" id="container">
 		<!-- Matrix -->
 		 <div class="col-span-9 row-span-9 flex items-center">
 			 <div class="rounded-lg border-2 border-sky-300 bg-sky-100 m-2">

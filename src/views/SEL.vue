@@ -1,9 +1,9 @@
 <script setup>
-import InputMatrix from '@/components/InputMatrix.vue';
-import { runInverse, runSEL } from '../../public/gauss_runner';
+import { runSEL } from '../../public/gauss_runner';
 import { reactive, ref } from 'vue';
 import InputLinearMatrix from '@/components/InputLinearMatrix.vue';
 import AugMatrix from '@/components/AugMatrix.vue';
+import { fileToMatrix } from '@/main';
 
 // Define state for the drop file overlay
 const active = ref(false);
@@ -43,29 +43,7 @@ function handleDrop(e) {
 		alert("Please Drop a Valid .txt File.");
 	}
 }
-function fileToMatrix(file, callback) {
-	const reader = new FileReader();
-	reader.onload = () => {
-		// Contains the raw text inside the file
-		const text = reader.result;
-		// Contains a two-dimensional array with the elements of the matrix inside
-		const elements = text.trim().split("\n").map(row => row.split(" ").map(value => Number(value.trim())));
-		// Uses the number of arrays to calculate the height of the matrix
-		const height = elements.length;
-		// uses the number of elements inside the first array to calculate the width
-		const width = elements[0]?.length || 0;
-		// Asing all the values found to a matrix object
-		const matrix = {
-			width: width,
-			height: height,
-			e: elements
-		};
-		// Aplies the function passed as a parameter to the result matrix
-		callback(matrix);
-	}
-	// Specifie how to read the file
-	reader.readAsText(file);
-}
+
 // Maps all the values in the two-dimensional array of the natrix to undefined
 function clearMatrix() {
 	matrixToOperate.e = matrixToOperate.e.map(row => row.map(() => undefined));
