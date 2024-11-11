@@ -7,8 +7,8 @@ const props = defineProps({
 		default: {
 			width: 3,
 			height: 3,
-			e: [[1,0,0],[0,1,0],[0,0,1]],
-			a: [0,0,0]
+			e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+			a: [0, 0, 0]
 		}
 	}
 })
@@ -27,7 +27,7 @@ const rMat = reactive({
 watch(augMatrix, () => {
 	lMat.width = augMatrix.width;
 	lMat.height = augMatrix.height;
-	lMat.e= augMatrix.e;
+	lMat.e = augMatrix.e;
 	rMat.width = 1;
 	rMat.height = augMatrix.height;
 	rMat.e = augMatrix.a.map(e => [e]);

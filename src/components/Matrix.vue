@@ -7,7 +7,7 @@ const props = defineProps({
 		default: {
 			width: 2,
 			height: 2,
-			e: [[1,0],[0,2]]
+			e: [[1, 0], [0, 2]]
 		}
 	}
 })
@@ -20,13 +20,11 @@ const matrix = reactive(props.matrix);
 		<table class="table-auto">
 			<tr v-for="i in matrix.height">
 				<td class="" v-for="j in matrix.width">
-					<p class="text-center hover:bg-sky-200 p-4">{{ matrix.e[i-1][j-1] }}</p>
+					<p class="text-center hover:bg-sky-200 p-4">{{ matrix.e[i - 1][j - 1] }}</p>
 				</td>
 			</tr>
 		</table>
 	</div>
 </template>
 
-<style>
-
-</style>
+<style></style>

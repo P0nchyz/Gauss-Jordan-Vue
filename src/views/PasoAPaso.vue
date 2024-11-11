@@ -13,7 +13,7 @@ const isRunning = ref(false);
 			<div></div>
 		</section>
 		<section :class="isRunning ? 'self-stretch flex flex-col items-center relative' : 'hidden'">
-			
+
 		</section>
 	</main>
 </template>

@@ -8,7 +8,8 @@ function isActiveLink(routePath) {
 </script>
 
 <template>
-	<nav class="flex flex-col bg-blue-50 min-w-fit items-center rounded-xl shadow-lg hover:shadow-xl hover:outline-2 outline outline-1 outline-gray-300 px-8 m-4">
+	<nav
+		class="flex flex-col bg-blue-50 min-w-fit items-center rounded-xl shadow-lg hover:shadow-xl hover:outline-2 outline outline-1 outline-gray-300 px-8 m-4">
 		<h1 class="text-2xl my-4">Menú</h1>
 		<div class="flex flex-col items-center gap-8">
 			<li :class="[isActiveLink('/') ? 'bg-sky-200' : 'bg-white hover:bg-gray-200',

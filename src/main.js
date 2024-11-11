@@ -1,14 +1,14 @@
-import './assets/main.css'
-import router from './router'
+import "./assets/main.css";
+import router from "./router";
 
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
 
 const app = createApp(App);
 
 app.use(router);
 
-app.mount('#app');
+app.mount("#app");
 
 const globalsBefore = new Set(Object.keys(window));
 
@@ -26,8 +26,8 @@ script.onload = () => {
 		if (!globalsBefore.has(key)) {
 			newGlobals.add(key);
 		}
-	})
-}
+	});
+};
 
 // Reset all keys added for WASM to undefined
 // Long Live Chayipiti
@@ -37,7 +37,7 @@ function returnState() {
 		if (curGlob.has(key)) {
 			window[key] = undefined;
 		}
-	})
+	});
 }
 
 function fileToMatrix(file, callback) {
@@ -46,7 +46,15 @@ function fileToMatrix(file, callback) {
 		// Contains the raw text inside the file
 		const text = reader.result;
 		// Contains a two-dimensional array with the elements of the matrix inside
-		const elements = text.trim().split("\n").map(row => row.trim().split(" ").map(value => Number(value.trim())));
+		const elements = text
+			.trim()
+			.split("\n")
+			.map((row) =>
+				row
+					.trim()
+					.split(" ")
+					.map((value) => Number(value.trim()))
+			);
 		// Uses the number of arrays to calculate the height of the matrix
 		const height = elements.length;
 		// uses the number of elements inside the first array to calculate the width
@@ -55,12 +63,12 @@ function fileToMatrix(file, callback) {
 		const matrix = {
 			width: width,
 			height: height,
-			e: elements
+			e: elements,
 		};
 		// Aplies the function passed as a parameter to the result matrix
 		callback(matrix);
-	}
+	};
 	// Specifie how to read the file
 	reader.readAsText(file);
 }
-export { returnState, fileToMatrix }
+export { returnState, fileToMatrix };

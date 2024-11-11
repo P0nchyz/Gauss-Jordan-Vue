@@ -12,6 +12,3 @@ import Sidebar from '@/components/Sidebar.vue';
 		</div>
 	</div>
 </template>
-
-<style>
-</style>

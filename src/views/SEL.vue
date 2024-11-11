@@ -11,11 +11,11 @@ const active = ref(false);
 const matrixToOperate = reactive({
 	width: 3,
 	height: 3,
-	e: [[1,0,0],[0,1,0],[0,0,1]],
-	a: [0,0,0]
+	e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+	a: [0, 0, 0]
 });
 // Change the state of the drop file overlay
-function toggleActive(){
+function toggleActive() {
 	active.value = !active.value;
 }
 // Update matrix value when changed inside the component
@@ -34,7 +34,7 @@ function handleDrop(e) {
 	// Checks if the file is a .txt
 	if (file && file.type === "text/plain") {
 		// Decodes the file to matrix object
-		fileToMatrix(file, (matrixOut) =>{
+		fileToMatrix(file, (matrixOut) => {
 			matrixToOperate.width = matrixOut.width;
 			matrixToOperate.height = matrixOut.height;
 			matrixToOperate.e = matrixOut.e;
@@ -51,8 +51,8 @@ function clearMatrix() {
 const calcMatrix = reactive({
 	width: 3,
 	height: 3,
-	e: [[1,0,0],[0,1,0],[0,0,1]],
-	a: [0,0,0]
+	e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+	a: [0, 0, 0]
 });
 function runProgram() {
 	let rmat = runSEL(matrixToOperate);
@@ -67,13 +67,10 @@ function runProgram() {
 <template>
 	<main class="grow flex flex-col items-center">
 		<!-- Matrix Input Section -->
-		<section
-		@dragenter.prevent="toggleActive"
-		@dragleave.prevent="toggleActive"
-		@dragover.prevent=""
-		@drop.prevent="handleDrop"
-		class="self-stretch flex flex-col items-center relative" >
-			<div :class="active ? 'absolute w-5/6 h-full bg-red-500/50 outline-8 outline-dashed outline-black flex items-center justify-center' : 'hidden' ">
+		<section @dragenter.prevent="toggleActive" @dragleave.prevent="toggleActive" @dragover.prevent=""
+			@drop.prevent="handleDrop" class="self-stretch flex flex-col items-center relative">
+			<div
+				:class="active ? 'absolute w-5/6 h-full bg-red-500/50 outline-8 outline-dashed outline-black flex items-center justify-center' : 'hidden'">
 				<p class="text-2xl">Suelte un archivo .txt</p>
 			</div>
 			<!--<InputMatrix :matrix="matrixToOperate" @matrix-updated="updateMatrix"/>-->
@@ -81,7 +78,8 @@ function runProgram() {
 			<!-- Action Buttons Section -->
 			<div class="self-end mx-40">
 				<div>
-					<button @click="clearMatrix" class="bg-white border-2 border-blue-500 text-black p-2 rounded m-4">Limpiar</button>
+					<button @click="clearMatrix"
+						class="bg-white border-2 border-blue-500 text-black p-2 rounded m-4">Limpiar</button>
 					<button @click="runProgram" class="bg-gradient-to-r from-blue-500 via-sky-500 to-blue-600 text-white hover:bg-gradient-to-br
 						focus:ring-2 focus:outline-none focus:ring-blue-800 shadow-lg shadow-blue-500/50 p-2 rounded m-4">
 						Continuar
@@ -89,10 +87,10 @@ function runProgram() {
 				</div>
 			</div>
 		</section>
-		<hr class="w-3/4 border-solid border-6 border-black "/>
+		<hr class="w-3/4 border-solid border-6 border-black " />
 		<!-- Output Matrix Section -->
 		<section>
-			<AugMatrix :linear-matrix="calcMatrix"/>
+			<AugMatrix :linear-matrix="calcMatrix" />
 		</section>
 	</main>
 </template>
