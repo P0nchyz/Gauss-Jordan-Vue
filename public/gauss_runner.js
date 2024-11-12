@@ -153,4 +153,84 @@ function runSEL(linMatrix) {
 	return retLinMat;
 }
 
-export { runInverse, runDeterminant, runSEL };
+function runPasoAPaso(augMat, pos, option) {
+	let augMatStr = '';
+	for (let i = 0; i < augMat.height; i++) {
+		let row = augMat.lMat.e[i].join(' ') + ' ' + augMat.rMat.e[i].join(' ');
+		augMatStr += row + '\n';
+	}
+	let inputString = '';
+	let rowTo;
+	let k;
+	switch (option) {
+		case '+':
+			rowTo = Number(prompt("Por que fila desea sumar."));
+			k = Number(prompt("Constante por la cual modificar la fila."));
+			console.warn(k);
+			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n1\n${pos.i + 1}\n${k}\n${rowTo}\n7\n`;
+			break;
+		case '-':
+			rowTo = Number(prompt("Por que fila desea sumar."));
+			k = prompt("Constante por la cual modificar la fila.");
+			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n2\n${pos.i + 1}\n${k}\n${rowTo}\n7\n`;
+			break;
+		case '*':
+			k = Number(prompt("Constante por la cual modificar la fila."));
+			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n4\n${pos.i + 1}\n${k}\n7\n`;
+			break;
+		case '/':
+			k = Number(prompt("Constante por la cual dividir la fila."));
+			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n3\n${pos.i + 1}\n${k}\n7\n`;
+			break;
+		case 'm':
+			rowTo = Number(prompt("Fila por la que intercambiar."));
+			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n5\n${pos.i + 1}\n${rowTo}\n7\n`;
+			break;
+		default:
+			alert("Chorizo");
+			break;
+	};
+	console.log(inputString);
+	const inputStringArray = inputString.split('');
+	let output = '';
+	Module.preRun = [() => {
+		FS.init(
+			() => {
+				if (inputStringArray.length > 0) {
+					return inputStringArray.shift().charCodeAt(0);
+				} else {
+					return null;
+				}
+			},
+			(char) => {
+				output += String.fromCharCode(char);
+			}
+		)
+	}];
+	run();
+	document.getElementById("gauss_jordan_script").remove();
+	returnState();
+	let script = document.createElement("script");
+	script.id = "gauss_jordan_script";
+	script.src = "/gauss_jordan.js";
+	document.body.appendChild(script);
+	console.log(output);
+	let augMatOut = parseAugMatrix(output);
+	const retAugMat = {
+		height: augMatOut.height,
+		width: augMatOut.lwidth + augMatOut.rwidth,
+		lMat: {
+			height: augMatOut.height,
+			width: augMatOut.lwidth,
+			e: augMatOut.e
+		},
+		rMat: {
+			height: augMatOut.height,
+			width: augMatOut.rwidth,
+			e: augMatOut.a
+		}
+	};
+	return retAugMat;
+}
+
+export { runInverse, runDeterminant, runSEL, runPasoAPaso };

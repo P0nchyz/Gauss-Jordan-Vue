@@ -3,6 +3,7 @@ import AugMatrix from '@/components/AugMatrix.vue';
 import InputAugMatrix from '@/components/InputAugMatrix.vue';
 import InputLinearMatrix from '@/components/InputLinearMatrix.vue';
 import { reactive, ref } from 'vue';
+import { runPasoAPaso } from '../../public/gauss_runner';
 
 const isRunning = ref(true);
 
@@ -55,7 +56,7 @@ function changePos(dir) {
 				pos.j--;
 			}
 			break;
-		case 't':
+		case 'u':
 			if (pos.i > 0) {
 				pos.i--;
 			}
@@ -75,6 +76,33 @@ function changePos(dir) {
 			break;
 	}
 }
+function runProgram(operation) {
+	let retAugMat = runPasoAPaso(matrixToOperate, pos, operation);
+	matrixToOperate.width = retAugMat.width;
+	matrixToOperate.height = retAugMat.height;
+	matrixToOperate.lMat = retAugMat.lMat;
+	matrixToOperate.rMat = retAugMat.rMat;
+}
+
+document.addEventListener('keydown', (event) => {
+	switch (event.key) {
+		case 'ArrowUp':
+			changePos('u');
+			break;
+		case 'ArrowDown':
+			changePos('d');
+			break;
+		case 'ArrowLeft':
+			changePos('l');
+			break;
+		case 'ArrowRight':
+			changePos('r');
+			break;
+		default:
+			alert("Catalina");
+			break;
+	}
+})
 </script>
 
 <template>
@@ -115,7 +143,7 @@ function changePos(dir) {
 							</svg>
 						</button></div>
 					<div class="flex flex-col">
-						<span><button @click="changePos('t')">
+						<span><button @click="changePos('u')">
 								<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960"
 									width="32px" fill="#000000">
 									<path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z" />
@@ -140,11 +168,11 @@ function changePos(dir) {
 					<div class="flex flex-col items-center">
 						<div :class="(buttonState.sum.open) ? 'flex gap-x-2' : 'hidden'">
 							<span>
-								<button
+								<button @click="runProgram('+')"
 									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">+</button>
 							</span>
 							<span>
-								<button
+								<button @click="runProgram('-')"
 									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">-</button>
 							</span>
 						</div>
@@ -163,11 +191,11 @@ function changePos(dir) {
 					<div class="flex flex-col items-center">
 						<div :class="(buttonState.mult.open) ? 'flex gap-x-2' : 'hidden'">
 							<span>
-								<button
+								<button @click="runProgram('*')"
 									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">*</button>
 							</span>
 							<span>
-								<button
+								<button @click="runProgram('/')"
 									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">÷</button>
 							</span>
 						</div>
@@ -184,7 +212,7 @@ function changePos(dir) {
 					</div>
 					<div>
 						<span>
-							<button
+							<button @click="runProgram('m')"
 								class="rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">
 								<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
 									width="24px" fill="#000000">
@@ -196,11 +224,11 @@ function changePos(dir) {
 					</div>
 					<div>
 						<span :class="(!buttonState.auto.one) ? 'block' : 'hidden'">
-							<button
+							<button disabled="disabled"
 								class="w-9 aspect-square rrounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">0</button>
 						</span>
 						<span :class="(buttonState.auto.one) ? 'block' : 'hidden'">
-							<button
+							<button disabled="disabled"
 								class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">1</button>
 						</span>
 					</div>
