@@ -78,7 +78,12 @@ function handleLeftDrop(e) {
 	if (file && file.type === "text/plain") {
 		fileToMatrix(file, (fileMatrix) => {
 			augMatrix.lMat.width = fileMatrix.width;
+			for (let i = 0; i < (fileMatrix.height - augMatrix.lMat.height); i++) {
+				addRow();
+			}
 			augMatrix.height = fileMatrix.height;
+			augMatrix.lMat.height = fileMatrix.height;
+			augMatrix.rMat.height = fileMatrix.height;
 			augMatrix.lMat.e = fileMatrix.e;
 			augMatrix.width = augMatrix.lMat.width + augMatrix.rMat.width;
 		});
@@ -93,7 +98,12 @@ function handleRightDrop(e) {
 	if (file && file.type === "text/plain") {
 		fileToMatrix(file, (fileMatrix) => {
 			augMatrix.rMat.width = fileMatrix.width;
+			for (let i = 0; i < (fileMatrix.height - augMatrix.rMat.height); i++) {
+				addRow();
+			}
 			augMatrix.height = fileMatrix.height;
+			augMatrix.lMat.height = fileMatrix.height;
+			augMatrix.rMat.height = fileMatrix.height;
 			augMatrix.rMat.e = fileMatrix.e;
 			augMatrix.width = augMatrix.lMat.width + augMatrix.rMat.width;
 		});

@@ -1,42 +1,52 @@
 <script setup>
 import Matrix from '@/components/Matrix.vue'
-import { reactive, watch } from 'vue';
+import { reactive } from 'vue';
 const props = defineProps({
-	linearMatrix: {
+	augMatrix: {
 		type: Object,
 		default: {
-			width: 3,
 			height: 3,
-			e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
-			a: [0, 0, 0]
+			width: 6,
+			lMat: {
+				height: 3,
+				width: 3,
+				e: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+			},
+			rMat: {
+				height: 3,
+				width: 3,
+				e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+			}
 		}
+	},
+	pos: {
+		type: Object,
+		default: {i: 0, j: 0}
 	}
 })
-const augMatrix = reactive(props.linearMatrix);
+const augMatrix = reactive(props.augMatrix);
 
-const lMat = reactive({
-	width: augMatrix.width,
-	height: augMatrix.height,
-	e: augMatrix.e
-});
-const rMat = reactive({
-	width: 1,
-	height: augMatrix.height,
-	e: augMatrix.a.map(e => [e])
-})
-watch(augMatrix, () => {
-	lMat.width = augMatrix.width;
-	lMat.height = augMatrix.height;
-	lMat.e = augMatrix.e;
-	rMat.width = 1;
-	rMat.height = augMatrix.height;
-	rMat.e = augMatrix.a.map(e => [e]);
-});
 </script>
 
 <template>
 	<div class="flex m-16">
-		<Matrix :matrix="lMat" />
-		<Matrix :matrix="rMat" />
+		<div class="inline-block rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
+			<table class="table-auto">
+				<tr v-for="(row, i) in augMatrix.lMat.height" :class="(i === pos.i) ? 'bg-blue-400' : 'bg-transparent'">
+					<td class="" v-for="(col, j) in augMatrix.lMat.width" :class="(j === pos.j && i === pos.i) ? 'bg-red-500/50' : 'bg-transparent'">
+						<p class="text-center hover:bg-sky-200 p-4">{{ augMatrix.lMat.e[i][j] }}</p>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="inline-block rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
+			<table class="table-auto">
+				<tr v-for="(row, i) in augMatrix.rMat.height" :class="(i === pos.i) ? 'bg-blue-400' : 'bg-transparent'">
+					<td class="" v-for="(col, j) in augMatrix.rMat.width">
+						<p class="text-center hover:bg-sky-200 p-4">{{ augMatrix.rMat.e[i][j] }}</p>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </template>

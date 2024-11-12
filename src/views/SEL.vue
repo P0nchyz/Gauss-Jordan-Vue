@@ -2,8 +2,8 @@
 import { runSEL } from '../../public/gauss_runner';
 import { reactive, ref } from 'vue';
 import InputLinearMatrix from '@/components/InputLinearMatrix.vue';
-import AugMatrix from '@/components/AugMatrix.vue';
 import { fileToMatrix } from '@/main';
+import LinearMatrix from '@/components/LinearMatrix.vue';
 
 // Define state for the drop file overlay
 const active = ref(false);
@@ -90,7 +90,7 @@ function runProgram() {
 		<hr class="w-3/4 border-solid border-6 border-black " />
 		<!-- Output Matrix Section -->
 		<section>
-			<AugMatrix :linear-matrix="calcMatrix" />
+			<LinearMatrix :linear-matrix="calcMatrix" />
 		</section>
 	</main>
 </template>
