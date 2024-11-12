@@ -5,7 +5,7 @@ import InputLinearMatrix from '@/components/InputLinearMatrix.vue';
 import { reactive, ref } from 'vue';
 import { runPasoAPaso } from '../../public/gauss_runner';
 
-const isRunning = ref(true);
+const isRunning = ref(false);
 
 const matrixToOperate = reactive({
 	height: 3,
@@ -99,7 +99,6 @@ document.addEventListener('keydown', (event) => {
 			changePos('r');
 			break;
 		default:
-			alert("Catalina");
 			break;
 	}
 })

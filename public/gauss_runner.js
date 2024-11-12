@@ -150,7 +150,9 @@ function runSEL(linMatrix) {
 		e: augMat.e,
 		a: augMat.a.flat()
 	}
-	return retLinMat;
+	let match = output.match(/<\((.*?)\)>/);
+	(match) ? match = match[1].split(',').map(num => parseFloat(num.trim())) : match = null;
+	return {mat: retLinMat, solution: match};
 }
 
 function runPasoAPaso(augMat, pos, option) {

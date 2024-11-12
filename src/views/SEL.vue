@@ -54,8 +54,12 @@ const calcMatrix = reactive({
 	e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
 	a: [0, 0, 0]
 });
+let solution = ref(null)
 function runProgram() {
-	let rmat = runSEL(matrixToOperate);
+	let rOb = runSEL(matrixToOperate);
+	let rmat = rOb.mat;
+	solution.value = rOb.solution;
+	console.log(solution.value);
 	calcMatrix.width = rmat.width;
 	calcMatrix.height = rmat.height;
 	calcMatrix.e = rmat.e;
@@ -89,8 +93,13 @@ function runProgram() {
 		</section>
 		<hr class="w-3/4 border-solid border-6 border-black " />
 		<!-- Output Matrix Section -->
-		<section>
+		<section class="flex flex-col items-center">
 			<LinearMatrix :linear-matrix="calcMatrix" />
+			<div v-if="solution" class="flex font-bold text-2xl">
+				<p>(</p>
+				<p v-for="(o,i) in solution">{{ solution[i] + ', ' }}</p>
+				<p>)</p>
+			</div>
 		</section>
 	</main>
 </template>
