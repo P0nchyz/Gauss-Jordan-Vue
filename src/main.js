@@ -13,7 +13,7 @@ app.mount("#app");
 const globalsBefore = new Set(Object.keys(window));
 
 let script = document.createElement("script");
-script.src = "/gauss_jordan.js";
+script.src = "/Gauss-Jordan-Vue/gauss_jordan.js";
 script.id = "gauss_jordan_script";
 document.body.appendChild(script);
 
@@ -57,14 +57,18 @@ function fileToMatrix(file, callback) {
 			);
 		// Uses the number of arrays to calculate the height of the matrix
 		const height = elements.length;
-		// uses the number of elements inside the first array to calculate the width
-		const width = elements[0]?.length || 0;
+		// Searches all the rows to find the longest one ans returns its length
+		const width = elements.reduce(
+			(maxLength, currentRow) => Math.max(maxLength, currentRow.length),
+			0
+		);
 		// Asing all the values found to a matrix object
 		const matrix = {
 			width: width,
 			height: height,
 			e: elements,
 		};
+		console.log(matrix);
 		// Aplies the function passed as a parameter to the result matrix
 		callback(matrix);
 	};

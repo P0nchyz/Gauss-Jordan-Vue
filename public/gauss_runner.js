@@ -66,7 +66,7 @@ function runInverse(matrix) {
 	returnState();
 	let script = document.createElement("script");
 	script.id = "gauss_jordan_script";
-	script.src = "/gauss_jordan.js";
+	script.src = "/Gauss-Jordan-Vue/gauss_jordan.js";
 	document.body.appendChild(script);
 	console.log(output);
 	let retMatrix;
@@ -102,7 +102,7 @@ function runDeterminant(matrix) {
 	returnState();
 	let script = document.createElement("script");
 	script.id = "gauss_jordan_script";
-	script.src = "/gauss_jordan.js";
+	script.src = "/Gauss-Jordan-Vue/gauss_jordan.js";
 	document.body.appendChild(script);
 	console.log("Sopa");
 	console.log(output);
@@ -139,7 +139,7 @@ function runSEL(linMatrix) {
 	returnState();
 	let script = document.createElement("script");
 	script.id = "gauss_jordan_script";
-	script.src = "/gauss_jordan.js";
+	script.src = "/Gauss-Jordan-Vue/gauss_jordan.js";
 	document.body.appendChild(script);
 	console.log("Sopa");
 	console.log(output);
@@ -214,7 +214,7 @@ function runPasoAPaso(augMat, pos, option) {
 	returnState();
 	let script = document.createElement("script");
 	script.id = "gauss_jordan_script";
-	script.src = "/gauss_jordan.js";
+	script.src = "/Gauss-Jordan-Vue/gauss_jordan.js";
 	document.body.appendChild(script);
 	console.log(output);
 	let augMatOut = parseAugMatrix(output);

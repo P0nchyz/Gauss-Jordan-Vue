@@ -22,8 +22,6 @@ const matrixToOperate = reactive({
 	}
 });
 
-console.log(matrixToOperate);
-
 function updateAugMatrix(e) {
 	matrixToOperate.width = e.width;
 	matrixToOperate.height = e.height;
