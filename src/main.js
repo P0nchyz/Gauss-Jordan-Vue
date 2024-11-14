@@ -75,4 +75,24 @@ function fileToMatrix(file, callback) {
 	// Specifie how to read the file
 	reader.readAsText(file);
 }
-export { returnState, fileToMatrix };
+
+function toFraction(decimal, tolerance = 1e-6) {
+	let numerator = 1;
+	let denominator = 1;
+	let fraction = numerator / denominator;
+
+	// Loop until the fraction is close enough to the decimal
+	while (Math.abs(fraction - decimal) > tolerance) {
+		if (fraction < decimal) {
+			numerator++;
+		} else {
+			denominator++;
+			numerator = Math.round(decimal * denominator);
+		}
+		fraction = numerator / denominator;
+	}
+
+	return {numerator, denominator};
+}
+
+export { returnState, fileToMatrix, toFraction };
