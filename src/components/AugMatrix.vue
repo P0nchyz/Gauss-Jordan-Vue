@@ -1,6 +1,6 @@
 <script setup>
-import Matrix from '@/components/Matrix.vue'
 import { reactive } from 'vue';
+import { toFraction } from '@/main';
 const props = defineProps({
 	augMatrix: {
 		type: Object,
@@ -25,7 +25,10 @@ const props = defineProps({
 	}
 })
 const augMatrix = reactive(props.augMatrix);
-
+function processInput(inputNumber) {
+	let fraction = toFraction(inputNumber);
+	return (fraction.denominator === 1 || fraction.numerator === 0) ? fraction.numerator : `${fraction.numerator} / ${fraction.denominator}`;
+}
 </script>
 
 <template>
@@ -34,7 +37,7 @@ const augMatrix = reactive(props.augMatrix);
 			<table class="table-auto">
 				<tr v-for="(row, i) in augMatrix.lMat.height" :class="(i === pos.i) ? 'bg-blue-400' : 'bg-transparent'">
 					<td class="" v-for="(col, j) in augMatrix.lMat.width" :class="(j === pos.j && i === pos.i) ? 'bg-red-500/50' : 'bg-transparent'">
-						<p class="text-center hover:bg-sky-200 p-4">{{ augMatrix.lMat.e[i][j] }}</p>
+						<p class="text-center hover:bg-sky-200 p-4">{{ processInput(augMatrix.lMat.e[i][j]) }}</p>
 					</td>
 				</tr>
 			</table>
@@ -43,7 +46,7 @@ const augMatrix = reactive(props.augMatrix);
 			<table class="table-auto">
 				<tr v-for="(row, i) in augMatrix.rMat.height" :class="(i === pos.i) ? 'bg-blue-400' : 'bg-transparent'">
 					<td class="" v-for="(col, j) in augMatrix.rMat.width">
-						<p class="text-center hover:bg-sky-200 p-4">{{ augMatrix.rMat.e[i][j] }}</p>
+						<p class="text-center hover:bg-sky-200 p-4">{{ processInput(augMatrix.rMat.e[i][j]) }}</p>
 					</td>
 				</tr>
 			</table>

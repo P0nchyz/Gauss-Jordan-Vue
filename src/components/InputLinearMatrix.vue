@@ -50,11 +50,11 @@ watch(matrix, () => emit("matrixUpdated", matrix));
 		<div class="col-span-9 row-span-9 flex items-center">
 			<div class="rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
 				<table class="table-auto">
-					<tr v-for="i in matrix.height">
-						<td class="" v-for="j in matrix.width">
+					<tr v-for="(row,i) in matrix.height">
+						<td class="" v-for="(col,j) in matrix.width">
 							<label class="min-w-8 flex justify-center hover:bg-sky-200 p-4">
 								<!-- Bind the value of the matrix elements to a specific cell -->
-								<input v-model="matrix.e[i - 1][j - 1]" :id="'e' + i + j" autocomplete="off"
+								<input v-model="matrix.e[i][j]" :id="'e' + i + j" autocomplete="off"
 									class="h-4 min-w-4 border-b-2 border-b-sky-400 focus:border-b-red-500 focus:outline-none bg-transparent appearance-none">
 							</label>
 						</td>
@@ -78,7 +78,7 @@ watch(matrix, () => emit("matrixUpdated", matrix));
 		</div>
 		<!-- Height Controller -->
 		<div class="col-start-10 row-span-9 flex flex-col items-center">
-			<button @click="delRow">
+			<button @click="addRow">
 				<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
 					fill="#000000">
 					<path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z" />
@@ -86,7 +86,7 @@ watch(matrix, () => emit("matrixUpdated", matrix));
 			</button>
 			<input type="number" name="s" id="s" :value="matrix.height" @input="onHeightChange"
 				class="outline outline-1 min-w-6 rounded-lg text-center appearance-none">
-			<button @click="addRow">
+			<button @click="delRow">
 				<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
 					fill="#000000">
 					<path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
