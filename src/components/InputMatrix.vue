@@ -84,7 +84,7 @@ watch(matrix, () => emit("matrixUpdated", matrix));
 							<td class="" v-for="(col,j) in matrix.width">
 								<label class="min-w-8 flex justify-center hover:bg-sky-200 p-4">
 									<!-- Bind the value of the matrix elements to a specific cell -->
-									<input v-model="matrix.e[i][j]" :id="'e' + i + j" autocomplete="off"
+									<input v-model="matrix.e[i][j]" :id="'e' + i + j" autocomplete="off" :class="isNaN(Number(matrix.e[i][j])) ? 'text-red-600' : ''"
 										class="h-4 min-w-4 border-b-2 border-b-sky-400 focus:border-b-red-500 focus:outline-none bg-transparent appearance-none">
 								</label>
 							</td>
