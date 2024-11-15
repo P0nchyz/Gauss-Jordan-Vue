@@ -1,11 +1,10 @@
 <script setup>
 import AugMatrix from '@/components/AugMatrix.vue';
 import InputAugMatrix from '@/components/InputAugMatrix.vue';
-import InputLinearMatrix from '@/components/InputLinearMatrix.vue';
 import { reactive, ref } from 'vue';
 import { runPasoAPaso } from '../../public/gauss_runner';
 
-const isRunning = ref(false);
+const isRunning = ref(true);
 
 const matrixToOperate = reactive({
 	height: 3,
@@ -38,9 +37,16 @@ const pos = reactive({ i: 0, j: 0 });
 const buttonState = reactive({
 	sum: {
 		open: false,
+		active: false,
+		op: 'sum'
 	},
 	mult: {
-		open: false
+		open: false,
+		active: false,
+		op: 'mult'
+	},
+	move: {
+		active: false
 	},
 	auto: {
 		one: true
@@ -74,13 +80,6 @@ function changePos(dir) {
 			break;
 	}
 }
-function runProgram(operation) {
-	let retAugMat = runPasoAPaso(matrixToOperate, pos, operation);
-	matrixToOperate.width = retAugMat.width;
-	matrixToOperate.height = retAugMat.height;
-	matrixToOperate.lMat = retAugMat.lMat;
-	matrixToOperate.rMat = retAugMat.rMat;
-}
 
 document.addEventListener('keydown', (event) => {
 	switch (event.key) {
@@ -96,10 +95,57 @@ document.addEventListener('keydown', (event) => {
 		case 'ArrowRight':
 			changePos('r');
 			break;
+		case 'Enter':
+			if (currentOperation != '') {
+				runProgram();
+			}
+			break;
 		default:
 			break;
 	}
 })
+
+const isOpActive = ref(true);
+const currentOperation = ref('');
+
+let opStepCount = ref(0);
+let runData = reactive({
+	Ri: undefined,
+	k: 1,
+	Rj: undefined
+})
+function runProgram() {
+	console.log(currentOperation)
+	if (currentOperation.value === '') {
+		return;
+	}
+	console.log(runData);
+	console.log(opStepCount.value)
+	if (opStepCount.value === 0) {
+		runData.Ri = pos.i;
+		(currentOperation.value === '*' || currentOperation.value === '/') ? opStepCount.value += 2 : opStepCount.value++;
+		console.log(opStepCount)
+	}
+	else if (opStepCount.value === 1) {
+		runData.Rj = pos.i;
+		opStepCount.value++;
+	}
+	else if (opStepCount.value === 2) {
+		opStepCount.value = 0;
+		if (currentOperation.value === '/' && runData.k === 0) {
+			alert("División entre 0");
+			currentOperation.value = '';
+			return;
+		}
+		let retAugMat = runPasoAPaso(matrixToOperate, currentOperation.value, runData);
+		matrixToOperate.width = retAugMat.width;
+		matrixToOperate.height = retAugMat.height;
+		matrixToOperate.lMat = retAugMat.lMat;
+		matrixToOperate.rMat = retAugMat.rMat;
+		currentOperation.value = '';
+	}
+}
+
 </script>
 
 <template>
@@ -165,11 +211,11 @@ document.addEventListener('keydown', (event) => {
 					<div class="flex flex-col items-center">
 						<div :class="(buttonState.sum.open) ? 'flex gap-x-2' : 'hidden'">
 							<span>
-								<button @click="runProgram('+')"
+								<button @click="currentOperation = '+'; buttonState.sum.open = false"
 									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">+</button>
 							</span>
 							<span>
-								<button @click="runProgram('-')"
+								<button @click="currentOperation = '-'; buttonState.sum.open = false"
 									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">-</button>
 							</span>
 						</div>
@@ -188,11 +234,11 @@ document.addEventListener('keydown', (event) => {
 					<div class="flex flex-col items-center">
 						<div :class="(buttonState.mult.open) ? 'flex gap-x-2' : 'hidden'">
 							<span>
-								<button @click="runProgram('*')"
+								<button @click="currentOperation = '*'; buttonState.mult.open = false"
 									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">*</button>
 							</span>
 							<span>
-								<button @click="runProgram('/')"
+								<button @click="currentOperation = '/'; buttonState.mult.open = false"
 									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">÷</button>
 							</span>
 						</div>
@@ -209,7 +255,7 @@ document.addEventListener('keydown', (event) => {
 					</div>
 					<div>
 						<span>
-							<button @click="runProgram('m')"
+							<button @click="currentOperation = 'm'"
 								class="rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">
 								<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
 									width="24px" fill="#000000">
@@ -224,13 +270,90 @@ document.addEventListener('keydown', (event) => {
 							<button disabled="disabled"
 								class="w-9 aspect-square rrounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">0</button>
 						</span>
-						<span :class="(buttonState.auto.one) ? 'block' : 'hidden'">
-							<button disabled="disabled"
+						<span :class="(buttonState.auto.one && matrixToOperate.lMat.e[pos.i][pos.j] != 0) ? 'block' : 'hidden'">
+							<button @click="opStepCount = 2; currentOperation = '/'; runData.Ri = pos.i; runData.k = matrixToOperate.lMat.e[pos.i][pos.j]; runProgram()"
 								class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">1</button>
 						</span>
 					</div>
 				</div>
 			</div>
+			<div id="op-display" :class="isOpActive ? 'flex my-4' : 'hidden'">
+				<div v-if="currentOperation === '+'" class="flex text-2xl gap-2">
+					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
+						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
+					<h2> + </h2>
+					<input v-model="runData.k" type="number"
+						class="bg-gray-200 border-black border-solid border-2 rounded-md">
+					<h2>R<sub :class="(opStepCount === 1) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 1) ?
+						pos.i + 1 : (runData.Rj !== undefined? runData.Rj + 1 : undefined) }}</sub></h2>
+					<h2> -> </h2>
+					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
+						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
+				</div>
+				<div v-else-if="currentOperation === '-'" class="flex text-2xl gap-2">
+					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
+						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
+					<h2> - </h2>
+					<input v-model="runData.k" type="number"
+						class="bg-gray-200 border-black border-solid border-2 rounded-md">
+					<h2>R<sub :class="(opStepCount === 1) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 1) ?
+						pos.i + 1 : (runData.Rj !== undefined ? runData.Rj + 1 : undefined) }}</sub></h2>
+					<h2> -> </h2>
+					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
+						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
+				</div>
+				<div v-else-if="currentOperation === '*'" class="flex text-2xl gap-2">
+					<input v-model="runData.k" type="number"
+						class="bg-gray-200 border-black border-solid border-2 rounded-md">
+					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
+						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
+					<h2> -> </h2>
+					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
+						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
+				</div>
+				<div v-else-if="currentOperation === '/'" class="flex text-2xl gap-2 items-center">
+					<span class="flex flex-col items-center gap-2">
+						<h2>1</h2>
+						<hr class="w-full border-solid border-2 border-black">
+						<input v-model="runData.k" type="number"
+							class="bg-gray-200 border-black border-solid border-2 rounded-md">
+					</span>
+					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
+						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
+					<h2> -> </h2>
+					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
+						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
+				</div>
+				<div v-else-if="currentOperation === 'm'" class="flex flex-col text-2xl gap-2">
+					<div class="flex gap-2">
+						<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0)
+							?
+							pos.i + 1 : runData.Ri + 1 }}</sub></h2>
+						<h2> -> </h2>
+						<h2>R<sub :class="(opStepCount === 1) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 1)
+							?
+							pos.i + 1 : (runData.Rj !== undefined ? runData.Rj + 1 : undefined) }}</sub></h2>
+					</div>
+					<div class="flex gap-2">
+						<h2>R<sub :class="(opStepCount === 1) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 1)
+							?
+							pos.i + 1 : (runData.Rj !== undefined ? runData.Rj + 1 : undefined) }}</sub></h2>
+						<h2> -> </h2>
+						<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0)
+							?
+							pos.i + 1 : runData.Ri + 1 }}</sub></h2>
+					</div>
+				</div>
+			</div>
+			<button @click="runProgram"
+				:class="(currentOperation != 0) ? `block bg-gradient-to-r ${(opStepCount != 2) ? 'from-blue-500 via-sky-500 to-blue-600 text-white hover:bg-gradient-to-br' : 'from-red-500 via-yellow-500 to-amber-600 text-white hover:bg-gradient-to-br'} focus:ring-2 focus:outline-none focus:ring-blue-800 shadow-lg shadow-blue-500/50 p-2 rounded m-4` : 'hidden'">{{
+					(opStepCount != 2) ? 'Siguiente' : 'Correr' }}</button>
 		</section>
 	</main>
 </template>
+
+<style lang="css" scoped>
+input {
+	field-sizing: content;
+}
+</style>

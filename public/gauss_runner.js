@@ -155,38 +155,28 @@ function runSEL(linMatrix) {
 	return {mat: retLinMat, solution: match};
 }
 
-function runPasoAPaso(augMat, pos, option) {
+function runPasoAPaso(augMat, option, data) {
 	let augMatStr = '';
 	for (let i = 0; i < augMat.height; i++) {
 		let row = augMat.lMat.e[i].join(' ') + ' ' + augMat.rMat.e[i].join(' ');
 		augMatStr += row + '\n';
 	}
 	let inputString = '';
-	let rowTo;
-	let k;
 	switch (option) {
 		case '+':
-			rowTo = Number(prompt("Por que fila desea sumar."));
-			k = Number(prompt("Constante por la cual modificar la fila."));
-			console.warn(k);
-			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n1\n${pos.i + 1}\n${k}\n${rowTo}\n7\n`;
+			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n1\n${data.Ri + 1}\n${data.k}\n${data.Rj + 1}\n7\n`;
 			break;
 		case '-':
-			rowTo = Number(prompt("Por que fila desea sumar."));
-			k = prompt("Constante por la cual modificar la fila.");
-			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n2\n${pos.i + 1}\n${k}\n${rowTo}\n7\n`;
+			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n2\n${data.Ri + 1}\n${data.k}\n${data.Rj + 1}\n7\n`;
 			break;
 		case '*':
-			k = Number(prompt("Constante por la cual modificar la fila."));
-			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n4\n${pos.i + 1}\n${k}\n7\n`;
+			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n4\n${data.Ri + 1}\n${data.k}\n7\n`;
 			break;
 		case '/':
-			k = Number(prompt("Constante por la cual dividir la fila."));
-			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n3\n${pos.i + 1}\n${k}\n7\n`;
+			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n3\n${data.Ri + 1}\n${data.k}\n7\n`;
 			break;
 		case 'm':
-			rowTo = Number(prompt("Fila por la que intercambiar."));
-			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n5\n${pos.i + 1}\n${rowTo}\n7\n`;
+			inputString = `p\n${augMat.height}\n${augMat.lMat.width}\n${augMat.rMat.width}\n${augMatStr}\n5\n${data.Ri + 1}\n${data.Rj + 1}\n7\n`;
 			break;
 		default:
 			alert("Chorizo");
