@@ -23,6 +23,9 @@ function addRow() {
 	matrix.height++;
 }
 function delRow() {
+	if (matrix.height === 1) {
+		return;
+	}
 	matrix.e.pop();
 	matrix.height--;
 }
@@ -32,6 +35,9 @@ function addCol() {
 	matrix.width++;
 }
 function delCol() {
+	if (matrix.width === 1) {
+		return;
+	}
 	matrix.e.forEach(row => row.pop());
 	matrix.width--;
 }
@@ -79,30 +85,34 @@ watch(matrix, () => emit("matrixUpdated", matrix));
 		</div>
 		<div class="flex flex-col items-center">
 			<div class="flex items-start">
-				<!-- Matrix -->
-				<div class="rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
-					<table class="table-auto">
-						<tr v-for="(row, i) in matrix.height" :key="i">
-							<td class="" v-for="(col, j) in matrix.width" :key="j">
-								<label class="min-w-8 flex justify-center hover:bg-sky-200 p-4">
-									<!-- Bind the value of the matrix elements to a specific cell -->
-									<input v-model="matrix.e[i][j]" :id="'e' + i + j" autocomplete="off"
-										:class="isNaN(Number(matrix.e[i][j])) ? 'text-red-600' : ''"
-										class="h-4 min-w-4 border-b-2 border-b-sky-400 focus:border-b-red-500 focus:outline-none bg-transparent appearance-none">
-								</label>
-							</td>
-						</tr>
-					</table>
+				<div class="flex items-stretch gap-0">
+					<div class="min-h-full w-4 border-blue-500 border-y-4 border-l-4 rounded-l-md"></div>
+					<!-- Matrix -->
+					<div class="rounded-lg border-2 border-blue-300 bg-blue-100 my-4">
+						<table class="table-auto">
+							<tr v-for="(row, i) in matrix.height" :key="i">
+								<td class="" v-for="(col, j) in matrix.width" :key="j">
+									<label class="min-w-8 flex justify-center hover:bg-sky-200 p-4">
+										<!-- Bind the value of the matrix elements to a specific cell -->
+										<input v-model="matrix.e[i][j]" :id="'e' + i + j" autocomplete="off"
+											:class="isNaN(Number(matrix.e[i][j])) ? 'text-red-600' : ''"
+											class="text-center min-w-4 border-b-2 border-b-sky-400 focus:border-b-red-500 focus:outline-none bg-transparent appearance-none">
+									</label>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="min-h-full w-4 border-blue-500 border-y-4 border-r-4 rounded-r-md"></div>
 				</div>
 				<!-- Height Controller -->
-				<div class="col-start-10 row-span-9 flex flex-col items-center">
+				<div class="flex flex-col mx-1 items-center">
 					<button @click="addRow">
 						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
 							fill="#000000">
 							<path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z" />
 						</svg>
 					</button>
-					<input type="number" name="s" id="s" :value="matrix.height" @input="onHeightChange"
+					<input disabled="disabled" type="number" name="s" id="s" :value="matrix.height" @input="onHeightChange"
 						class="outline outline-1 min-w-6 rounded-lg text-center appearance-none">
 					<button @click="delRow">
 						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -120,7 +130,7 @@ watch(matrix, () => emit("matrixUpdated", matrix));
 						<path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
 					</svg>
 				</button>
-				<input type="number" name="s" id="s" :value="matrix.width" @input="onWidthChange"
+				<input type="number" disabled="disabled" name="s" id="s" :value="matrix.width" @input="onWidthChange"
 					class="outline outline-1 min-w-6 rounded-lg text-center appearance-none">
 				<button @click="addCol">
 					<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"

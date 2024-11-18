@@ -23,15 +23,17 @@ function processInput(inputNumber) {
 </script>
 
 <template>
-	<div class="inline-block rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
-		<table class="table-auto">
-			<tr v-for="(row, i) in matrix.height" :key="i">
-				<td class="" v-for="(col, j) in matrix.width" :key="j">
-					<p class="text-center hover:bg-sky-200 p-4">{{ processInput(matrix.e[i][j]) }}</p>
-				</td>
-			</tr>
-		</table>
+	<div class="flex items-stretch gap-1">
+		<div class="min-h-full w-4 border-blue-500 border-y-4 border-l-4 rounded-l-md"></div>
+		<div class="rounded-md border-2 border-blue-300 bg-blue-100 my-4">
+			<table class="table-auto">
+				<tr v-for="(row, i) in matrix.height" :key="i" class="">
+					<td v-for="(col, j) in matrix.width" :key="j">
+						<p class="text-center hover:bg-sky-200 p-4">{{ processInput(matrix.e[i][j]) }}</p>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="min-h-full w-4 border-blue-500 border-y-4 border-r-4 rounded-r-md"></div>
 	</div>
 </template>
-
-<style></style>

@@ -38,7 +38,10 @@ function runProgram() {
 </script>
 
 <template>
-	<main class="grow flex flex-col items-center">
+	<main class="grow flex flex-col items-center mt-20">
+		<div class="self-start">
+			<h2 class="text-2xl font-serif font-medium mx-40">Matriz Inversa</h2>
+		</div>
 		<!-- Matrix Input Section -->
 		<section class="self-stretch flex flex-col items-center relative">
 			<InputMatrix :matrix="matrixToOperate" @matrix-updated="updateMatrix" />
