@@ -53,7 +53,9 @@ function fileToMatrix(file, callback) {
 				row
 					.trim()
 					.split(" ")
-					.map((value) => /^[0-9+\-*/%() ]+$/.test(value) ? eval(value) : NaN)
+					.map((value) =>
+						/^[0-9+\-*/%() ]+$/.test(value) ? eval(value) : NaN
+					)
 			);
 		// Uses the number of arrays to calculate the height of the matrix
 		const height = elements.length;
@@ -94,7 +96,9 @@ function toFraction(decimal, tolerance = 1e-4) {
 		fraction = numerator / denominator;
 	}
 
-	return !isNegative ? {numerator, denominator} : {numerator:-numerator, denominator};
+	return !isNegative
+		? { numerator, denominator }
+		: { numerator: -numerator, denominator };
 }
 
 export { returnState, fileToMatrix, toFraction };

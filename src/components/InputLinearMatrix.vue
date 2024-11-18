@@ -5,11 +5,13 @@ const emit = defineEmits(['matrixUpdated'])
 const props = defineProps({
 	linearMatrix: {
 		type: Object,
-		default: {
-			height: 3,
-			width: 3,
-			e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
-			a: [0, 0, 0]
+		default() {
+			return {
+				height: 3,
+				width: 3,
+				e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+				a: [0, 0, 0]
+			}
 		}
 	}
 });
@@ -34,10 +36,10 @@ function delCol() {
 	matrix.width--;
 }
 // TO-DO: Implement use of value change
-function onWidthChange(e) {
+function onWidthChange() {
 	alert("no")
 }
-function onHeightChange(e) {
+function onHeightChange() {
 	alert("no")
 }
 // When a value in matrix changes it will update the parent component
@@ -50,11 +52,12 @@ watch(matrix, () => emit("matrixUpdated", matrix));
 		<div class="col-span-9 row-span-9 flex items-center">
 			<div class="rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
 				<table class="table-auto">
-					<tr v-for="(row,i) in matrix.height">
-						<td class="" v-for="(col,j) in matrix.width">
+					<tr v-for="(row, i) in matrix.height" :key="i">
+						<td class="" v-for="(col, j) in matrix.width" :key="j">
 							<label class="min-w-8 flex justify-center hover:bg-sky-200 p-4">
 								<!-- Bind the value of the matrix elements to a specific cell -->
-								<input v-model="matrix.e[i][j]" :id="'e' + i + j" autocomplete="off" :class="isNaN(Number(matrix.e[i][j])) ? 'text-red-500' : ''"
+								<input v-model="matrix.e[i][j]" :id="'e' + i + j" autocomplete="off"
+									:class="isNaN(Number(matrix.e[i][j])) ? 'text-red-500' : ''"
 									class="h-4 min-w-4 border-b-2 border-b-sky-400 focus:border-b-red-500 focus:outline-none bg-transparent appearance-none">
 							</label>
 						</td>
@@ -63,11 +66,12 @@ watch(matrix, () => emit("matrixUpdated", matrix));
 			</div>
 			<div class="rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
 				<table>
-					<tr v-for="(row,i) in matrix.height">
+					<tr v-for="(row, i) in matrix.height" :key="i">
 						<td class="">
 							<label class="min-w-8 flex justify-center hover:bg-sky-200 p-4">
 								<!-- Bind the value of the matrix elements to a specific cell -->
-								<input v-model="matrix.a[i]" :id="'a' + i" autocomplete="off" :class="isNaN(Number(matrix.a[i]) ? 'text-red-500' : '')"
+								<input v-model="matrix.a[i]" :id="'a' + i" autocomplete="off"
+									:class="isNaN(Number(matrix.a[i]) ? 'text-red-500' : '')"
 									class="h-4 min-w-4 border-b-2 border-b-sky-400 focus:border-b-red-500 focus:outline-none bg-transparent appearance-none">
 							</label>
 						</td>

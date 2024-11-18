@@ -2,7 +2,7 @@
 import Matrix from '@/components/Matrix.vue';
 import InputMatrix from '@/components/InputMatrix.vue';
 import { runInverse } from '../../public/gauss_runner';
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 // Define default matrix
 const matrixToOperate = reactive({
 	width: 3,

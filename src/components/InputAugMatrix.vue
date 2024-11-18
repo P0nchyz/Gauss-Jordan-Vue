@@ -7,18 +7,20 @@ const emit = defineEmits(['augMatrixUpdated']);
 const props = defineProps({
 	augMatrix: {
 		type: Object,
-		default: {
-			height: 3,
-			width: 6,
-			lMat: {
+		default() {
+			return {
 				height: 3,
-				width: 3,
-				e: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-			},
-			rMat: {
-				height: 3,
-				width: 3,
-				e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+				width: 6,
+				lMat: {
+					height: 3,
+					width: 3,
+					e: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+				},
+				rMat: {
+					height: 3,
+					width: 3,
+					e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+				}
 			}
 		}
 	}
@@ -163,8 +165,8 @@ watch(augMatrix, () => emit('augMatrixUpdated', augMatrix));
 				</div>
 				<div class="rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
 					<table class="table-auto">
-						<tr v-for="(row, i) in augMatrix.rMat.height">
-							<td class="" v-for="(col, j) in augMatrix.rMat.width">
+						<tr v-for="(row, i) in augMatrix.rMat.height" :key="i">
+							<td class="" v-for="(col, j) in augMatrix.rMat.width" :key="j">
 								<label class="min-w-8 flex justify-center hover:bg-sky-200 p-4">
 									<!-- Bind the value of the matrix elements to a specific cell -->
 									<input v-model="augMatrix.rMat.e[i][j]" :id="'le' + i + j" autocomplete="off"

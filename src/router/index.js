@@ -5,36 +5,35 @@ import PasoAPaso from "@/views/PasoAPaso.vue";
 import SEL from "@/views/SEL.vue";
 import DPP from "@/views/DPP.vue";
 
-
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
 		{
-			path: '/',
-			name: 'Inversa',
-			component: Inversa
+			path: "/",
+			name: "Inversa",
+			component: Inversa,
 		},
 		{
-			path: '/Determinante',
-			name: 'Determinante',
-			component: Determinante
+			path: "/Determinante",
+			name: "Determinante",
+			component: Determinante,
 		},
 		{
-			path: '/PasoAPaso',
-			name: 'PasoAPaso',
-			component: PasoAPaso
+			path: "/PasoAPaso",
+			name: "PasoAPaso",
+			component: PasoAPaso,
 		},
 		{
-			path: '/SEL',
-			name: 'SEL',
-			component: SEL
+			path: "/SEL",
+			name: "SEL",
+			component: SEL,
 		},
 		{
-			path: '/DPP',
-			name: 'DPP',
-			component: DPP
-		}
-	]
+			path: "/DPP",
+			name: "DPP",
+			component: DPP,
+		},
+	],
 });
 
 export default router;

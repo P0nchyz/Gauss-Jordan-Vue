@@ -5,10 +5,12 @@ import { reactive } from 'vue';
 const props = defineProps({
 	matrix: {
 		type: Object,
-		default: {
-			width: 2,
-			height: 2,
-			e: [[1, 0], [0, 2]]
+		default() {
+			return {
+				width: 2,
+				height: 2,
+				e: [[1, 0], [0, 2]]
+			}
 		}
 	}
 })
@@ -23,8 +25,8 @@ function processInput(inputNumber) {
 <template>
 	<div class="inline-block rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
 		<table class="table-auto">
-			<tr v-for="(row,i) in matrix.height">
-				<td class="" v-for="(col,j) in matrix.width">
+			<tr v-for="(row, i) in matrix.height" :key="i">
+				<td class="" v-for="(col, j) in matrix.width" :key="j">
 					<p class="text-center hover:bg-sky-200 p-4">{{ processInput(matrix.e[i][j]) }}</p>
 				</td>
 			</tr>

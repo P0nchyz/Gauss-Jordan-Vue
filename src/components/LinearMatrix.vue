@@ -4,11 +4,13 @@ import { reactive, watch } from 'vue';
 const props = defineProps({
 	linearMatrix: {
 		type: Object,
-		default: {
-			width: 3,
-			height: 3,
-			e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
-			a: [0, 0, 0]
+		default() {
+			return {
+				width: 3,
+				height: 3,
+				e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+				a: [0, 0, 0]
+			}
 		}
 	}
 })
