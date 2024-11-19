@@ -3,7 +3,7 @@ import AugMatrix from '@/components/AugMatrix.vue';
 import InputAugMatrix from '@/components/InputAugMatrix.vue';
 import { reactive, ref } from 'vue';
 import { runPasoAPaso } from '../../public/gauss_runner';
-import { validateAugMatrix } from '@/main';
+import { processAugInputMatrix, validateAugMatrix } from '@/main';
 
 const isRunning = ref(false);
 
@@ -116,10 +116,7 @@ let runData = reactive({
 	Rj: undefined
 })
 function runProgram() {
-	if (!validateAugMatrix(matrixToOperate)) {
-		alert("Matriz Incorrecta");
-		return;
-	}
+
 	console.log(currentOperation)
 	if (currentOperation.value === '') {
 		return;
@@ -151,6 +148,15 @@ function runProgram() {
 	}
 }
 
+function runMain() {
+	processAugInputMatrix(matrixToOperate)
+	if (!validateAugMatrix(matrixToOperate)) {
+		alert("Matriz Incorrecta");
+		return;
+	}
+	isRunning.value = !isRunning.value;
+}
+
 </script>
 
 <template>
@@ -162,7 +168,7 @@ function runProgram() {
 				<div>
 					<button @click="clearAugMatrix"
 						class="bg-white border-2 border-blue-500 text-black p-2 rounded m-4">Limpiar</button>
-					<button @click="isRunning = !isRunning" class="bg-gradient-to-r from-blue-500 via-sky-500 to-blue-600 text-white hover:bg-gradient-to-br
+					<button @click="runMain" class="bg-gradient-to-r from-blue-500 via-sky-500 to-blue-600 text-white hover:bg-gradient-to-br
 						focus:ring-2 focus:outline-none focus:ring-blue-800 shadow-lg shadow-blue-500/50 p-2 rounded m-4">
 						Continuar
 					</button>

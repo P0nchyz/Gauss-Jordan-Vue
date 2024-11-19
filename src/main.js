@@ -119,7 +119,7 @@ function validateMatrix(matrix) {
 		for (let element of row) {
 			if (typeof element !== "number" || isNaN(element)) {
 				console.warn(element + typeof element);
-				console.warn("Incorrect Element")
+				console.warn("Incorrect Element");
 				return false;
 			}
 		}
@@ -137,8 +137,9 @@ function validateAugMatrix(augMatrix) {
 		typeof augMatrix.rMat.width !== "number" ||
 		typeof augMatrix.rMat.height !== "number" ||
 		!Array.isArray(augMatrix.rMat.e) ||
-		augMatrix.height !== augMatrix.lMat.height || augMatrix.height !== augMatrix.rMat.height ||
-		augMatrix.width !== (augMatrix.lMat.width + augMatrix.rMat.width)
+		augMatrix.height !== augMatrix.lMat.height ||
+		augMatrix.height !== augMatrix.rMat.height ||
+		augMatrix.width !== augMatrix.lMat.width + augMatrix.rMat.width
 	) {
 		console.warn("Incorrect Matrix Property");
 		return false;
@@ -184,5 +185,35 @@ function processInputMatrix(matrix) {
 		}
 	}
 }
+function processAugInputMatrix(matrix) {
+	for (let i = 0; i < matrix.lMat.height; i++) {
+		for (let j = 0; j < matrix.lMat.width; j++) {
+			const value = matrix.lMat.e[i][j];
+			if (value === "") {
+				matrix.lMat.e[i][j] = undefined;
+			} else {
+				matrix.lMat.e[i][j] = Number(value);
+			}
+		}
+	}
+	for (let i = 0; i < matrix.rMat.height; i++) {
+		for (let j = 0; j < matrix.rMat.width; j++) {
+			const value = matrix.rMat.e[i][j];
+			if (value === "") {
+				matrix.rMat.e[i][j] = undefined;
+			} else {
+				matrix.rMat.e[i][j] = Number(value);
+			}
+		}
+	}
+}
 
-export { returnState, fileToMatrix, toFraction, validateMatrix, validateAugMatrix, processInputMatrix };
+export {
+	returnState,
+	fileToMatrix,
+	toFraction,
+	validateMatrix,
+	validateAugMatrix,
+	processInputMatrix,
+	processAugInputMatrix
+};
