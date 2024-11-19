@@ -3,6 +3,7 @@ import AugMatrix from '@/components/AugMatrix.vue';
 import InputAugMatrix from '@/components/InputAugMatrix.vue';
 import { reactive, ref } from 'vue';
 import { runPasoAPaso } from '../../public/gauss_runner';
+import { validateAugMatrix } from '@/main';
 
 const isRunning = ref(false);
 
@@ -115,6 +116,10 @@ let runData = reactive({
 	Rj: undefined
 })
 function runProgram() {
+	if (!validateAugMatrix(matrixToOperate)) {
+		alert("Matriz Incorrecta");
+		return;
+	}
 	console.log(currentOperation)
 	if (currentOperation.value === '') {
 		return;

@@ -2,7 +2,7 @@
 import { runSEL } from '../../public/gauss_runner';
 import { reactive, ref } from 'vue';
 import InputLinearMatrix from '@/components/InputLinearMatrix.vue';
-import { fileToMatrix } from '@/main';
+import { fileToMatrix, processInputMatrix, validateMatrix } from '@/main';
 import LinearMatrix from '@/components/LinearMatrix.vue';
 
 // Define state for the drop file overlay
@@ -59,6 +59,11 @@ function solutionToText() {
 	return solution.value.join(',');
 }
 function runProgram() {
+	processInputMatrix(matrixToOperate);
+	if (!validateMatrix(matrixToOperate)) {
+		alert("Matriz Incorrecta");
+		return;
+	}
 	let rOb = runSEL(matrixToOperate);
 	let rmat = rOb.mat;
 	solution.value = rOb.solution;

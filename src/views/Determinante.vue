@@ -2,6 +2,7 @@
 import InputMatrix from '@/components/InputMatrix.vue';
 import { runDeterminant } from '../../public/gauss_runner';
 import { reactive, ref } from 'vue';
+import { processInputMatrix, validateMatrix } from '@/main';
 
 // Define default matrix
 const matrixToOperate = reactive({
@@ -21,6 +22,11 @@ function clearMatrix() {
 }
 const determinante = ref(1);
 function runProgram() {
+	processInputMatrix(matrixToOperate);
+	if (!validateMatrix(matrixToOperate)) {
+		alert("Matriz Incorrecta");
+		return;
+	}
 	if (matrixToOperate.width === matrixToOperate.height) {
 		determinante.value = runDeterminant(matrixToOperate);
 	} else {
