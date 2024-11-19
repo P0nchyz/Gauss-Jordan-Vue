@@ -212,11 +212,11 @@ function runProgram() {
 						<div :class="(buttonState.sum.open) ? 'flex gap-x-2' : 'hidden'">
 							<span>
 								<button @click="currentOperation = '+'; buttonState.sum.open = false"
-									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">+</button>
+									class="w-9 text-2xl aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">+</button>
 							</span>
 							<span>
 								<button @click="currentOperation = '-'; buttonState.sum.open = false"
-									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">-</button>
+									class="w-9 text-2xl aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">-</button>
 							</span>
 						</div>
 						<div>
@@ -225,7 +225,7 @@ function runProgram() {
 							</span>
 							<span :class="(!buttonState.sum.open) ? 'block' : 'hidden'">
 								<button
-									class="rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2"
+									class="rounded-full border-2 text-2xl border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2"
 									@click="buttonState.sum.open = !buttonState.sum.open">+
 									/ -</button>
 							</span>
@@ -235,11 +235,11 @@ function runProgram() {
 						<div :class="(buttonState.mult.open) ? 'flex gap-x-2' : 'hidden'">
 							<span>
 								<button @click="currentOperation = '*'; buttonState.mult.open = false"
-									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">*</button>
+									class="w-9 text-2xl aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">*</button>
 							</span>
 							<span>
 								<button @click="currentOperation = '/'; buttonState.mult.open = false"
-									class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">÷</button>
+									class="w-9 text-2xl aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">÷</button>
 							</span>
 						</div>
 						<div>
@@ -248,7 +248,7 @@ function runProgram() {
 							</span>
 							<span :class="(!buttonState.mult.open) ? 'block' : 'hidden'">
 								<button @click="buttonState.mult.open = !buttonState.mult.open"
-									class="rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">*
+									class="rounded-full text-2xl border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">*
 									/ ÷</button>
 							</span>
 						</div>
@@ -274,7 +274,7 @@ function runProgram() {
 							:class="(buttonState.auto.one && matrixToOperate.lMat.e[pos.i][pos.j] != 0) ? 'block' : 'hidden'">
 							<button
 								@click="opStepCount = 2; currentOperation = '/'; runData.Ri = pos.i; runData.k = matrixToOperate.lMat.e[pos.i][pos.j]; runProgram()"
-								class="w-9 aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">1</button>
+								class="w-9 text-2xl aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">1</button>
 						</span>
 					</div>
 				</div>

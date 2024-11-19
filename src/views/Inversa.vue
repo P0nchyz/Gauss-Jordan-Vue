@@ -3,6 +3,7 @@ import Matrix from '@/components/Matrix.vue';
 import InputMatrix from '@/components/InputMatrix.vue';
 import { runInverse } from '../../public/gauss_runner';
 import { reactive } from 'vue';
+import { processInputMatrix, validateMatrix } from '@/main';
 // Define default matrix
 const matrixToOperate = reactive({
 	width: 3,
@@ -25,6 +26,11 @@ const calcMatrix = reactive({
 	e: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
 });
 function runProgram() {
+	processInputMatrix(matrixToOperate);
+	if (!validateMatrix(matrixToOperate)) {
+		alert("Matriz Incorrecta");
+		return;
+	}
 	if (matrixToOperate.width === matrixToOperate.height) {
 		let rMatrix = runInverse(matrixToOperate);
 		calcMatrix.width = rMatrix.width;

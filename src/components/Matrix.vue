@@ -20,6 +20,10 @@ function processInput(inputNumber) {
 	let fraction = toFraction(inputNumber);
 	return (fraction.denominator === 1 || fraction.numerator === 0) ? fraction.numerator : `${fraction.numerator} / ${fraction.denominator}`;
 }
+function isFraction(inputNumber) {
+	let fraction = toFraction(inputNumber);
+	return (fraction.denominator === 1 || fraction.numerator === 0) ? false : true;
+}
 </script>
 
 <template>
@@ -29,7 +33,13 @@ function processInput(inputNumber) {
 			<table class="table-auto">
 				<tr v-for="(row, i) in matrix.height" :key="i" class="">
 					<td v-for="(col, j) in matrix.width" :key="j">
-						<p class="text-center hover:bg-sky-200 p-4">{{ processInput(matrix.e[i][j]) }}</p>
+						<div v-if="isFraction(matrix.e[i][j])" class="flex flex-col w-fit items-center p-4">
+							<p class="border-solid border-b-black border-b-4">{{ toFraction(matrix.e[i][j]).numerator }}</p>
+							<p>{{ toFraction(matrix.e[i][j]).denominator }}</p>
+						</div>
+						<div v-else class="p-4">
+							<p>{{ toFraction(matrix.e[i][j]).numerator }}</p>
+						</div>
 					</td>
 				</tr>
 			</table>

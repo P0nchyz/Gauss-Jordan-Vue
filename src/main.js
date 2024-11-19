@@ -101,4 +101,88 @@ function toFraction(decimal, tolerance = 1e-4) {
 		: { numerator: -numerator, denominator };
 }
 
-export { returnState, fileToMatrix, toFraction };
+function validateMatrix(matrix) {
+	if (
+		typeof matrix.width !== "number" ||
+		typeof matrix.height !== "number" ||
+		!Array.isArray(matrix.e)
+	) {
+		console.warn("Incorrect matrix property types.");
+		return false;
+	}
+	for (let row of matrix.e) {
+		if (!Array.isArray(row) || row.length !== matrix.width) {
+			console.warn("Not inner Array");
+			return false;
+		}
+
+		for (let element of row) {
+			if (typeof element !== "number" || isNaN(element)) {
+				console.warn(element + typeof element);
+				console.warn("Incorrect Element")
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+function validateAugMatrix(augMatrix) {
+	if (
+		typeof augMatrix.width !== "number" ||
+		typeof augMatrix.height !== "number" ||
+		typeof augMatrix.lMat.width !== "number" ||
+		typeof augMatrix.lMat.height !== "number" ||
+		!Array.isArray(augMatrix.lMat.e) ||
+		typeof augMatrix.rMat.width !== "number" ||
+		typeof augMatrix.rMat.height !== "number" ||
+		!Array.isArray(augMatrix.rMat.e) ||
+		augMatrix.height !== augMatrix.lMat.height || augMatrix.height !== augMatrix.rMat.height ||
+		augMatrix.width !== (augMatrix.lMat.width + augMatrix.rMat.width)
+	) {
+		console.warn("Incorrect Matrix Property");
+		return false;
+	}
+	for (let row of augMatrix.lMat.e) {
+		if (!Array.isArray(row) || row.length !== augMatrix.lMat.width) {
+			console.warn("Not Inner Array");
+			return false;
+		}
+		for (let element of row) {
+			if (typeof element !== "number" || isNaN(element)) {
+				console.warn(element + typeof element);
+				console.warn("Incorrect element");
+				return false;
+			}
+		}
+	}
+	for (let row of augMatrix.rMat.e) {
+		if (!Array.isArray(row) || row.length !== augMatrix.rMat.width) {
+			console.warn("Not Inner Array");
+			return false;
+		}
+		for (let element of row) {
+			if (typeof element !== "number" || isNaN(element)) {
+				console.warn(element + typeof element);
+				console.warn("Incorrect element");
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+function processInputMatrix(matrix) {
+	for (let i = 0; i < matrix.height; i++) {
+		for (let j = 0; j < matrix.width; j++) {
+			const value = matrix.e[i][j];
+			if (value === "") {
+				matrix.e[i][j] = undefined;
+			} else {
+				matrix.e[i][j] = Number(value);
+			}
+		}
+	}
+}
+
+export { returnState, fileToMatrix, toFraction, validateMatrix, validateAugMatrix, processInputMatrix };
