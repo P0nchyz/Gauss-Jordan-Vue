@@ -4,6 +4,7 @@ import SELIcon from '@/assets/img/SELIcon_White.png'
 import PasoAPasoIcon from '@/assets/img/pasoAPasoIcon_White.png'
 import InversaIcon from '@/assets/img/inversaIcon_White.png'
 import DeterminanteIcon from '@/assets/img/determinanteIcon_White.png'
+import logo from '@/assets/img/GJ.svg'
 
 function isActiveLink(routePath) {
 	const route = useRoute();
@@ -14,7 +15,8 @@ function isActiveLink(routePath) {
 <template>
 	<div
 		class="flex flex-col max-h-[100vh] overflow-auto gap-10 bg-transparent min-w-fit items-center font-serif text-white px-4 py-12">
-		<div>
+		<div class="flex gap-2 items-center">
+			<img :src="logo" alt="" class="size-12">
 			<h1 class="font-extrabold text-3xl">Gauss Jordan</h1>
 		</div>
 		<nav class="flex flex-col gap-8 text-xl font-medium">
