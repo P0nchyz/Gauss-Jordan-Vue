@@ -30,10 +30,6 @@ const props = defineProps({
 	}
 })
 const augMatrix = reactive(props.augMatrix);
-function processInput(inputNumber) {
-	let fraction = toFraction(inputNumber);
-	return (fraction.denominator === 1 || fraction.numerator === 0) ? fraction.numerator : `${fraction.numerator} / ${fraction.denominator}`;
-}
 function isFraction(inputNumber) {
 	let fraction = toFraction(inputNumber);
 	return (fraction.denominator === 1 || fraction.numerator === 0) ? false : true;
@@ -49,7 +45,7 @@ function isFraction(inputNumber) {
 					<td class="" v-for="(col, j) in augMatrix.lMat.width"
 						:class="(j === pos.j && i === pos.i) ? 'bg-red-500/50' : 'bg-transparent'" :key="j">
 						<div v-if="isFraction(augMatrix.lMat.e[i][j])" class="flex flex-col w-fit items-center p-4">
-							<p class="border-solid border-b-black border-b-4">{{ toFraction(augMatrix.lMat.e[i][j]).numerator }}
+							<p class="border-solid border-b-black border-b-2">{{ toFraction(augMatrix.lMat.e[i][j]).numerator }}
 							</p>
 							<p>{{ toFraction(augMatrix.lMat.e[i][j]).denominator }}</p>
 						</div>
@@ -66,7 +62,7 @@ function isFraction(inputNumber) {
 					:key="i">
 					<td class="" v-for="(col, j) in augMatrix.rMat.width" :key="j">
 						<div v-if="isFraction(augMatrix.rMat.e[i][j])" class="flex flex-col w-fit items-center p-4">
-							<p class="border-solid border-b-black border-b-4">{{ toFraction(augMatrix.rMat.e[i][j]).numerator }}
+							<p class="border-solid border-b-black border-b-2">{{ toFraction(augMatrix.rMat.e[i][j]).numerator }}
 							</p>
 							<p>{{ toFraction(augMatrix.rMat.e[i][j]).denominator }}</p>
 						</div>

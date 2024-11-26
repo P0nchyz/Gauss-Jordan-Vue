@@ -1,5 +1,5 @@
 <script setup>
-import { fileToMatrix } from '@/main';
+import { fileToMatrix, processInputMatrix, validateMatrix } from '@/main';
 import { reactive, ref, watch } from 'vue';
 const emit = defineEmits(['matrixUpdated'])
 // Define Default Matrix to be Passsed as Prop
@@ -70,6 +70,11 @@ function handleDrop(e) {
 		});
 	} else {
 		alert("Please Drop a Valid .txt File.");
+	}
+	processInputMatrix(matrix);
+	if (!validateMatrix(matrix)) {
+		alert("Matriz Incorrecta");
+		return;
 	}
 }
 // When a value in matrix changes it will update the parent component

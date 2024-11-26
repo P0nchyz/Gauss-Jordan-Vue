@@ -54,7 +54,7 @@ function fileToMatrix(file, callback) {
 					.trim()
 					.split(" ")
 					.map((value) =>
-						/^[0-9+\-*/%() ]+$/.test(value) ? eval(value) : NaN
+						/^[0-9.\-+*/]+$/.test(value) ? eval(value) : NaN
 					)
 			);
 		// Uses the number of arrays to calculate the height of the matrix

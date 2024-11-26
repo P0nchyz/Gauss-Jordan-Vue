@@ -4,7 +4,7 @@ import SELIcon from '@/assets/img/SELIcon_White.png'
 import PasoAPasoIcon from '@/assets/img/pasoAPasoIcon_White.png'
 import InversaIcon from '@/assets/img/inversaIcon_White.png'
 import DeterminanteIcon from '@/assets/img/determinanteIcon_White.png'
-import logo from '@/assets/img/GJ.svg'
+import logo from '@/assets/img/GJ.png'
 
 function isActiveLink(routePath) {
 	const route = useRoute();

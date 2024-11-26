@@ -76,7 +76,10 @@ function runProgram() {
 </script>
 
 <template>
-	<main class="grow flex flex-col items-center">
+	<main class="grow flex flex-col items-center mt-20">
+		<div class="self-start">
+			<h2 class="text-2xl font-serif font-medium mx-40">Sistema de Ecuaciones Lineales</h2>
+		</div>
 		<!-- Matrix Input Section -->
 		<section @dragenter.prevent="toggleActive" @dragleave.prevent="toggleActive" @dragover.prevent=""
 			@drop.prevent="handleDrop" class="self-stretch flex flex-col items-center relative">

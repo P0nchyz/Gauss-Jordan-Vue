@@ -116,7 +116,7 @@ let runData = reactive({
 	Rj: undefined
 })
 function runProgram() {
-
+	runData.k = eval(runData.k);
 	console.log(currentOperation)
 	if (currentOperation.value === '') {
 		return;
@@ -145,6 +145,9 @@ function runProgram() {
 		matrixToOperate.lMat = retAugMat.lMat;
 		matrixToOperate.rMat = retAugMat.rMat;
 		currentOperation.value = '';
+		runData.Ri = undefined;
+		runData.Rj = undefined;
+		runData.k = 1;
 	}
 }
 
@@ -160,7 +163,10 @@ function runMain() {
 </script>
 
 <template>
-	<main class="grow flex flex-col items-center">
+	<main class="grow flex flex-col items-center mt-20">
+		<div class="self-start">
+			<h2 class="text-2xl font-serif font-medium mx-40">Paso a Paso</h2>
+		</div>
 		<section :class="!isRunning ? 'self-stretch flex flex-col items-center relative' : 'hidden'">
 			<InputAugMatrix :aug-matrix="matrixToOperate" @aug-matrix-updated="updateAugMatrix" />
 			<!-- Action Buttons Section -->
@@ -284,7 +290,7 @@ function runMain() {
 						<span
 							:class="(buttonState.auto.one && matrixToOperate.lMat.e[pos.i][pos.j] != 0) ? 'block' : 'hidden'">
 							<button
-								@click="opStepCount = 2; currentOperation = '/'; runData.Ri = pos.i; runData.k = matrixToOperate.lMat.e[pos.i][pos.j]; runProgram()"
+								@click="opStepCount = 2; currentOperation = '/'; runData.Ri = pos.i; runData.k = matrixToOperate.lMat.e[pos.i][pos.j]; runProgram(); runData.k = 1"
 								class="w-9 text-2xl aspect-square rounded-full border-2 border-blue-500 hover:border-blue-700 active:bg-blue-400 active:text-white text-blue-700 font-bold py-1 px-2">1</button>
 						</span>
 					</div>
@@ -295,7 +301,7 @@ function runMain() {
 					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
 						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
 					<h2> + </h2>
-					<input v-model="runData.k" type="number"
+					<input v-model="runData.k"
 						class="bg-gray-200 border-black border-solid border-2 rounded-md">
 					<h2>R<sub :class="(opStepCount === 1) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 1) ?
 						pos.i + 1 : (runData.Rj !== undefined ? runData.Rj + 1 : undefined) }}</sub></h2>
@@ -307,7 +313,7 @@ function runMain() {
 					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
 						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
 					<h2> - </h2>
-					<input v-model="runData.k" type="number"
+					<input v-model="runData.k"
 						class="bg-gray-200 border-black border-solid border-2 rounded-md">
 					<h2>R<sub :class="(opStepCount === 1) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 1) ?
 						pos.i + 1 : (runData.Rj !== undefined ? runData.Rj + 1 : undefined) }}</sub></h2>
