@@ -78,7 +78,7 @@ function fileToMatrix(file, callback) {
 	reader.readAsText(file);
 }
 
-function toFraction(decimal, tolerance = 1e-4) {
+function toFraction(decimal, tolerance = 1e-6) {
 	const isNegative = decimal < 0;
 	decimal = Math.abs(decimal);
 	let numerator = 1;
@@ -180,7 +180,7 @@ function processInputMatrix(matrix) {
 			if (value === "") {
 				matrix.e[i][j] = undefined;
 			} else {
-				matrix.e[i][j] = Number(value);
+				matrix.e[i][j] = Number(eval(value));
 			}
 		}
 	}
@@ -192,7 +192,7 @@ function processAugInputMatrix(matrix) {
 			if (value === "") {
 				matrix.lMat.e[i][j] = undefined;
 			} else {
-				matrix.lMat.e[i][j] = Number(value);
+				matrix.lMat.e[i][j] = Number(eval(value));
 			}
 		}
 	}
@@ -202,7 +202,7 @@ function processAugInputMatrix(matrix) {
 			if (value === "") {
 				matrix.rMat.e[i][j] = undefined;
 			} else {
-				matrix.rMat.e[i][j] = Number(value);
+				matrix.rMat.e[i][j] = Number(eval(value));
 			}
 		}
 	}
