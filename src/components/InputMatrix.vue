@@ -67,14 +67,14 @@ function handleDrop(e) {
 			matrix.width = fileMatrix.width;
 			matrix.height = fileMatrix.height;
 			matrix.e = fileMatrix.e;
+			processInputMatrix(matrix);
+			if (!validateMatrix(matrix)) {
+				alert("Matriz Incorrecta");
+				return;
+			}
 		});
 	} else {
 		alert("Please Drop a Valid .txt File.");
-	}
-	processInputMatrix(matrix);
-	if (!validateMatrix(matrix)) {
-		alert("Matriz Incorrecta");
-		return;
 	}
 }
 // When a value in matrix changes it will update the parent component
@@ -100,7 +100,7 @@ watch(matrix, () => emit("matrixUpdated", matrix));
 									<label class="min-w-8 flex justify-center hover:bg-sky-200 p-4">
 										<!-- Bind the value of the matrix elements to a specific cell -->
 										<input v-model="matrix.e[i][j]" :id="'e' + i + j" autocomplete="off"
-											:class="isNaN(Number(matrix.e[i][j])) ? 'text-red-600' : ''"
+											:class="isNaN(Number(matrix.e[i][j])) ? 'text-red-600 bg-red-200' : ''"
 											class="text-center min-w-4 border-b-2 border-b-sky-400 focus:border-b-red-500 focus:outline-none bg-transparent appearance-none">
 									</label>
 								</td>

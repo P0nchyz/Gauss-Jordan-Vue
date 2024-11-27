@@ -38,6 +38,12 @@ function handleDrop(e) {
 			matrixToOperate.width = matrixOut.width;
 			matrixToOperate.height = matrixOut.height;
 			matrixToOperate.e = matrixOut.e;
+			processInputMatrix(matrixToOperate);
+			if (!validateMatrix(matrixToOperate)) {
+				alert("Matriz Incorrecta");
+				return;
+			}
+
 		});
 	} else {
 		alert("Please Drop a Valid .txt File.");

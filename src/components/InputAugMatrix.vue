@@ -1,5 +1,5 @@
 <script setup>
-import { fileToMatrix } from '@/main';
+import { fileToMatrix, processAugInputMatrix, validateAugMatrix } from '@/main';
 import { reactive, ref, watch } from 'vue';
 
 const emit = defineEmits(['augMatrixUpdated']);
@@ -65,12 +65,10 @@ function delCol(direction) {
 
 const leftDropActive = ref(false);
 function toggleLeftActive() {
-	console.log(leftDropActive.value);
 	leftDropActive.value = !leftDropActive.value;
 }
 const rightDropActive = ref(false);
 function toggleRightActive() {
-	console.log(rightDropActive.value);
 	rightDropActive.value = !rightDropActive.value;
 }
 
@@ -88,6 +86,11 @@ function handleLeftDrop(e) {
 			augMatrix.rMat.height = fileMatrix.height;
 			augMatrix.lMat.e = fileMatrix.e;
 			augMatrix.width = augMatrix.lMat.width + augMatrix.rMat.width;
+			processAugInputMatrix(augMatrix);
+			if (!validateAugMatrix(augMatrix)) {
+				alert("Matriz Incorrecta");
+				return;
+			}
 		});
 		console.log(augMatrix);
 	} else {
@@ -108,6 +111,11 @@ function handleRightDrop(e) {
 			augMatrix.rMat.height = fileMatrix.height;
 			augMatrix.rMat.e = fileMatrix.e;
 			augMatrix.width = augMatrix.lMat.width + augMatrix.rMat.width;
+			processAugInputMatrix(augMatrix);
+			if (!validateAugMatrix(augMatrix)) {
+				alert("Matriz Incorrecta");
+				return;
+			}
 		});
 		console.log(augMatrix);
 	} else {
@@ -134,6 +142,7 @@ watch(augMatrix, () => emit('augMatrixUpdated', augMatrix));
 								<label class="min-w-8 flex justify-center hover:bg-sky-200 p-4">
 									<!-- Bind the value of the matrix elements to a specific cell -->
 									<input v-model="augMatrix.lMat.e[i][j]" :id="'le' + i + j" autocomplete="off"
+										:class="isNaN(Number(augMatrix.lMat.e[i][j])) ? 'text-red-600 bg-red-200' : ''"
 										class="h-4 min-w-4 border-b-2 border-b-sky-400 focus:border-b-red-500 focus:outline-none bg-transparent appearance-none">
 								</label>
 							</td>
@@ -170,6 +179,7 @@ watch(augMatrix, () => emit('augMatrixUpdated', augMatrix));
 								<label class="min-w-8 flex justify-center hover:bg-sky-200 p-4">
 									<!-- Bind the value of the matrix elements to a specific cell -->
 									<input v-model="augMatrix.rMat.e[i][j]" :id="'le' + i + j" autocomplete="off"
+										:class="isNaN(Number(augMatrix.rMat.e[i][j])) ? 'text-red-600 bg-red-200' : ''"
 										class="h-4 min-w-4 border-b-2 border-b-sky-400 focus:border-b-red-500 focus:outline-none bg-transparent appearance-none">
 								</label>
 							</td>

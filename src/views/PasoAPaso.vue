@@ -302,7 +302,7 @@ function runMain() {
 						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
 					<h2> + </h2>
 					<input v-model="runData.k"
-						class="bg-gray-200 border-black border-solid border-2 rounded-md">
+						class="bg-gray-200 border-black border-solid border-2 rounded-md min-w-8 max-w-24">
 					<h2>R<sub :class="(opStepCount === 1) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 1) ?
 						pos.i + 1 : (runData.Rj !== undefined ? runData.Rj + 1 : undefined) }}</sub></h2>
 					<h2> -> </h2>
@@ -314,7 +314,7 @@ function runMain() {
 						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
 					<h2> - </h2>
 					<input v-model="runData.k"
-						class="bg-gray-200 border-black border-solid border-2 rounded-md">
+						class="bg-gray-200 border-black border-solid border-2 rounded-md min-w-8 max-w-24">
 					<h2>R<sub :class="(opStepCount === 1) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 1) ?
 						pos.i + 1 : (runData.Rj !== undefined ? runData.Rj + 1 : undefined) }}</sub></h2>
 					<h2> -> </h2>
@@ -322,8 +322,8 @@ function runMain() {
 						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
 				</div>
 				<div v-else-if="currentOperation === '*'" class="flex text-2xl gap-2">
-					<input v-model="runData.k" type="number"
-						class="bg-gray-200 border-black border-solid border-2 rounded-md">
+					<input v-model="runData.k"
+						class="bg-gray-200 border-black border-solid border-2 rounded-md min-w-8 max-w-24">
 					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
 						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
 					<h2> -> </h2>
@@ -335,7 +335,7 @@ function runMain() {
 						<h2>1</h2>
 						<hr class="w-full border-solid border-2 border-black">
 						<input v-model="runData.k" type="number"
-							class="bg-gray-200 border-black border-solid border-2 rounded-md">
+							class="bg-gray-200 border-black border-solid border-2 rounded-md min-w-8 max-w-24">
 					</span>
 					<h2>R<sub :class="(opStepCount === 0) ? 'text-red-500' : 'text-inherit'">{{ (opStepCount === 0) ?
 						pos.i + 1 : runData.Ri + 1 }}</sub></h2>
