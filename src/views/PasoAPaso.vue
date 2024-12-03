@@ -2,7 +2,7 @@
 import AugMatrix from '@/components/AugMatrix.vue';
 import InputAugMatrix from '@/components/InputAugMatrix.vue';
 import { reactive, ref } from 'vue';
-import { runPasoAPaso } from '../../public/gauss_runner';
+import { runGaussJordan, runPasoAPaso } from '../../public/gauss_runner';
 import { processAugInputMatrix, validateAugMatrix } from '@/main';
 
 const isRunning = ref(false);
@@ -160,6 +160,19 @@ function runMain() {
 	isRunning.value = !isRunning.value;
 }
 
+function runAutoGaussJordan() {
+	processAugInputMatrix(matrixToOperate);
+	if (!validateAugMatrix(matrixToOperate)) {
+		alert("Matriz Incorrecta");
+		return;
+	}
+	let retAugMat = runGaussJordan(matrixToOperate);
+	matrixToOperate.width = retAugMat.width;
+	matrixToOperate.height = retAugMat.height;
+	matrixToOperate.lMat = retAugMat.lMat;
+	matrixToOperate.rMat = retAugMat.rMat;
+}
+
 </script>
 
 <template>
@@ -193,6 +206,8 @@ function runMain() {
 					</button>
 				</span>
 				<AugMatrix :aug-matrix="matrixToOperate" :pos="pos" />
+				<button @click="runAutoGaussJordan" class="bg-gradient-to-r from-blue-500 via-sky-500 to-blue-600 text-white hover:bg-gradient-to-br
+						focus:ring-2 focus:outline-none focus:ring-blue-800 shadow-lg shadow-blue-500/50 p-2 rounded m-4">Auto</button>
 			</div>
 			<div id="pAp-control-panel" class="flex gap-x-16">
 				<div id="pos-selector" class="flex items-center">

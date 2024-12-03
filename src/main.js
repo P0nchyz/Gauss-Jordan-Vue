@@ -78,7 +78,7 @@ function fileToMatrix(file, callback) {
 	reader.readAsText(file);
 }
 
-function toFraction(decimal, tolerance = 1e-6) {
+function toFraction(decimal, tolerance = 1e-4) {
 	const isNegative = decimal < 0;
 	decimal = Math.abs(decimal);
 	let numerator = 1;

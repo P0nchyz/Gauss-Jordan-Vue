@@ -38,40 +38,50 @@ function isFraction(inputNumber) {
 
 <template>
 	<div class="flex m-16">
-		<div class="inline-block rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
-			<table class="table-auto">
-				<tr v-for="(row, i) in augMatrix.lMat.height" :class="(i === pos.i) ? 'bg-blue-400' : 'bg-transparent'"
-					:key="i">
-					<td class="" v-for="(col, j) in augMatrix.lMat.width"
-						:class="(j === pos.j && i === pos.i) ? 'bg-red-500/50' : 'bg-transparent'" :key="j">
-						<div v-if="isFraction(augMatrix.lMat.e[i][j])" class="flex flex-col w-fit items-center p-4">
-							<p class="border-solid border-b-black border-b-2">{{ toFraction(augMatrix.lMat.e[i][j]).numerator }}
-							</p>
-							<p>{{ toFraction(augMatrix.lMat.e[i][j]).denominator }}</p>
-						</div>
-						<div v-else class="p-4">
-							<p>{{ toFraction(augMatrix.lMat.e[i][j]).numerator }}</p>
-						</div>
-					</td>
-				</tr>
-			</table>
+		<div class="flex items-stretch gap-1">
+			<div class="min-h-full w-4 border-blue-500 border-y-4 border-l-4 rounded-l-md"></div>
+			<div class="rounded-md border-2 border-blue-300 bg-blue-100 my-4">
+				<table class="table-auto h-full w-full">
+					<tr v-for="(row, i) in augMatrix.lMat.height"
+						:class="(i === pos.i) ? 'bg-blue-400' : 'bg-transparent'" :key="i">
+						<td class="" v-for="(col, j) in augMatrix.lMat.width"
+							:class="(j === pos.j && i === pos.i) ? 'bg-red-500/50' : 'bg-transparent'" :key="j">
+							<div v-if="isFraction(augMatrix.lMat.e[i][j])" class="flex flex-col w-fit items-center p-4">
+								<p class="border-solid border-b-black border-b-2">{{
+									toFraction(augMatrix.lMat.e[i][j]).numerator }}
+								</p>
+								<p>{{ toFraction(augMatrix.lMat.e[i][j]).denominator }}</p>
+							</div>
+							<div v-else class="p-4">
+								<p>{{ toFraction(augMatrix.lMat.e[i][j]).numerator }}</p>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="min-h-full w-4 border-blue-500 border-r-4"></div>
 		</div>
-		<div class="inline-block rounded-lg border-2 border-sky-300 bg-sky-100 m-2">
-			<table class="table-auto">
-				<tr v-for="(row, i) in augMatrix.rMat.height" :class="(i === pos.i) ? 'bg-blue-400' : 'bg-transparent'"
-					:key="i">
-					<td class="" v-for="(col, j) in augMatrix.rMat.width" :key="j">
-						<div v-if="isFraction(augMatrix.rMat.e[i][j])" class="flex flex-col w-fit items-center p-4">
-							<p class="border-solid border-b-black border-b-2">{{ toFraction(augMatrix.rMat.e[i][j]).numerator }}
-							</p>
-							<p>{{ toFraction(augMatrix.rMat.e[i][j]).denominator }}</p>
-						</div>
-						<div v-else class="p-4">
-							<p>{{ toFraction(augMatrix.rMat.e[i][j]).numerator }}</p>
-						</div>
-					</td>
-				</tr>
-			</table>
+		<div class="flex items-stretch gap-1">
+			<div class="min-h-full w-4"></div>
+			<div class="rounded-md border-2 border-blue-300 bg-blue-100 my-4">
+				<table class="table-auto h-full w-full">
+					<tr v-for="(row, i) in augMatrix.rMat.height"
+						:class="(i === pos.i) ? 'bg-blue-400' : 'bg-transparent'" :key="i">
+						<td class="" v-for="(col, j) in augMatrix.rMat.width" :key="j">
+							<div v-if="isFraction(augMatrix.rMat.e[i][j])" class="flex flex-col w-fit items-center p-4">
+								<p class="border-solid border-b-black border-b-2">{{
+									toFraction(augMatrix.rMat.e[i][j]).numerator }}
+								</p>
+								<p>{{ toFraction(augMatrix.rMat.e[i][j]).denominator }}</p>
+							</div>
+							<div v-else class="p-4">
+								<p>{{ toFraction(augMatrix.rMat.e[i][j]).numerator }}</p>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="min-h-full w-4 border-blue-500 border-y-4 border-r-4 rounded-r-md"></div>
 		</div>
 	</div>
 </template>
